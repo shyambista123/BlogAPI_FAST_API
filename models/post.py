@@ -8,7 +8,7 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = Column(String, index=True)
+    title = Column(String, nullable=False, index=True)
     content = Column(String, nullable=False)
     user_id = Column(UUID, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="posts")
