@@ -1,11 +1,13 @@
 # Blog API
 
-This is a Blog API built with FastAPI. It supports user authentication, creating and managing blog posts, and more. The project uses PostgreSQL as the database and Alembic for database migrations. It is also containerized using Docker.
+This is a Blog API built with FastAPI. It supports user authentication, creating and managing blog posts, likes, and comments. The project uses PostgreSQL as the database and Alembic for database migrations. It is also containerized using Docker.
 
 ## Features
 
 - User authentication (register, login)
 - CRUD operations for blog posts
+- Like and Unlike posts
+- Comment on posts (CRUD operations)
 - Token-based authentication (JWT)
 - Database migrations with Alembic
 - Tests using Pytest
@@ -60,7 +62,7 @@ To create the database and run the migrations, you need to set up Alembic. Run t
 alembic upgrade head
 ```
 
-This will set up the tables for users and posts.
+This will set up the tables for users, posts, likes, and comments.
 
 ### 5. Running the Application
 
@@ -104,15 +106,15 @@ The tests are located in the `tests` directory, and you can add more as you deve
 ```
 .
 ├── alembic.ini                  # Alembic configuration for database migrations
-├── api                           # API route definitions (authentication, posts, users)
+├── api                           # API route definitions (authentication, posts, likes, comments, users)
 ├── config                        # Configuration files (logging, settings)
 ├── db                            # Database-related files (models, migrations)
 ├── docker-compose.yml            # Docker Compose configuration
 ├── Dockerfile                    # Dockerfile to build the app container
 ├── main.py                       # FastAPI application entry point
-├── models                        # ORM models (user, post)
+├── models                        # ORM models (user, post, like, comment)
 ├── schemas                       # Pydantic models for request/response validation
-├── services                      # Business logic layer (auth, posts, users)
+├── services                      # Business logic layer (auth, posts, likes, comments, users)
 ├── tests                         # Unit and integration tests for the API
 ├── pyproject.toml                # Poetry configuration for dependency management
 └── README.md                     # Project documentation
@@ -120,10 +122,24 @@ The tests are located in the `tests` directory, and you can add more as you deve
 
 ## API Endpoints
 
+### **Authentication**
 - `POST /auth/register`: Create a new user
 - `POST /auth/login`: Log in and receive a JWT token
+
+### **Blog Posts**
 - `GET /api/posts`: Retrieve all blog posts (authentication required)
 - `POST /api/posts`: Create a new blog post (authentication required)
 - `GET /api/posts/{id}`: Retrieve a specific blog post (authentication required)
 - `PUT /api/posts/{id}`: Update a specific blog post (authentication required)
-- `DELETE /posts/{id}`: Delete a specific blog post (authentication required)
+- `DELETE /api/posts/{id}`: Delete a specific blog post (authentication required)
+
+### **Likes**
+- `POST /likes/`: Like or Unlike a post
+- `GET /likes/{post_id}/count`: Get total likes for a post
+
+### **Comments**
+- `POST /comments/`: Create a new comment
+- `GET /comments/{comment_id}`: Fetch a comment by ID
+- `PUT /comments/{comment_id}`: Update a comment (Only owner can update)
+- `DELETE /comments/{comment_id}`: Delete a comment (Only owner can delete)
+
