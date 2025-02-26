@@ -5,6 +5,7 @@ from schemas.post import PostCreate
 from sqlalchemy.orm import Session
 from db.database import get_db
 from services.post import create_post, get_all_posts, update_post, delete_post
+from uuid import UUID
 
 router = APIRouter(prefix="/api", tags=["APIs"])
 
@@ -30,7 +31,7 @@ def my_posts(db: Session = Depends(get_db), current_user: User = Depends(get_cur
 
 @router.put("/posts/{post_id}")
 def update_single_post(
-    post_id: int, 
+    post_id: UUID, 
     post_update: PostCreate, 
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
@@ -46,7 +47,7 @@ def update_single_post(
 
 
 @router.delete("/posts/{post_id}")
-def delete_single_post(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def delete_single_post(post_id: UUID, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """Delete a post by its ID."""
     try:
         delete_post(post_id, db, current_user)

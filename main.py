@@ -4,6 +4,8 @@ from db.database import engine
 from models.base import Base
 from models.user import User
 from models.post import Post
+from models.like import Like
+from models.comment import Comment
 from services.auth import get_current_user, get_db
 from api.middlewares import setup_middlewares
 from sqlalchemy.orm import Session
