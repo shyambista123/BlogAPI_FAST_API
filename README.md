@@ -91,7 +91,7 @@ poetry run fastapi dev main.py
 
 The application will be accessible at `http://localhost:8000/docs`.
 
-### 6. Running Tests
+### 6. Running Tests (Not implemented yet)
 
 You can run the tests using Pytest:
 
