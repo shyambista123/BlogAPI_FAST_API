@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # FastAPI app service
   app:
     build: .
     container_name: fastapi-app
@@ -10,22 +9,21 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}  # Adjust the reference to environment variables
+      - DATABASE_URL=postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}
     volumes:
       - .:/app
     networks:
       - app-network
     env_file:
-      - .env.container  # Docker Compose will automatically load the env variables here
+      - .env.container
 
-  # PostgreSQL service
   db:
     image: postgres:13
     container_name: postgres-db
     environment:
-      - POSTGRES_USER=${DATABASE_USERNAME}  # Use the env var for username
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}  # Use the env var for password
-      - POSTGRES_DB=${DATABASE_NAME}  # Use the env var for database name
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -35,7 +33,6 @@ services:
 volumes:
   postgres_data:
 
-# Define the network for inter-service communication
 networks:
   app-network:
     driver: bridge
